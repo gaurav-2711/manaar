@@ -66,6 +66,11 @@
 			<artifactId>jaxb-api</artifactId>
 			<version>2.3.1</version> <!-- or the version you prefer -->
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

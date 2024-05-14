@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .authorizeHttpRequests((req) -> req
                                 .requestMatchers("/register","/login").permitAll()
                                 .requestMatchers( "/page/**").permitAll()
+                                .requestMatchers( "/menu/**").permitAll()
                                 .requestMatchers("/getUsers","/getSpecificUser").hasAnyAuthority("VIEWER","ADMIN", "EDITOR")
                                 .requestMatchers(HttpMethod.PUT,"/updateUser/**").hasAnyAuthority("EDITOR", "ADMIN")
                                 .anyRequest().authenticated()
