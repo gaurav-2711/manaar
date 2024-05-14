@@ -1,18 +1,11 @@
 package cms.manaar.controller;
 
 import cms.manaar.config.JwtUtils;
-import cms.manaar.models.JwtRequest;
-import cms.manaar.models.JwtResponse;
 import cms.manaar.models.User;
-import cms.manaar.models.UserCredentials;
 import cms.manaar.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

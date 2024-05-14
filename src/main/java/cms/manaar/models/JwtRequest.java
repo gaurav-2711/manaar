@@ -1,7 +1,5 @@
 package cms.manaar.models;
 
-import lombok.AllArgsConstructor;
-
 import java.io.Serializable;
 
 public class JwtRequest implements Serializable {
@@ -31,7 +29,6 @@ public class JwtRequest implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 
 }

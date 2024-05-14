@@ -16,14 +16,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-
-import java.util.Collection;
 
 @RestController
 public class JwtAuthController {
@@ -42,10 +38,6 @@ public class JwtAuthController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-//        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUserName(), jwtRequest.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authenticate);
-//
-//        return ResponseEntity.ok(authenticate);
         try {
             logger.warn("authenticationRequest ::"+authenticationRequest.getPassword());
             logger.warn("authenticationRequest ::"+authenticationRequest.getUserName());

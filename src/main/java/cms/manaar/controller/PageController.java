@@ -1,7 +1,6 @@
 package cms.manaar.controller;
 
 import cms.manaar.models.Page;
-import cms.manaar.models.User;
 import cms.manaar.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
