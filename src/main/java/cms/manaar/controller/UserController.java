@@ -23,6 +23,20 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @RequestMapping({"/user", "/user/"})
+    public String user() {
+        return "user";
+    }
+
+    @RequestMapping({"/user/addUser", "/user/addUser/"})
+    public String addUser() {
+        return "user-add";
+    }
+
+    @RequestMapping("/register")
+    public String registerUser() {
+        return "register";
+    }
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<User>> getAllUsers() {
