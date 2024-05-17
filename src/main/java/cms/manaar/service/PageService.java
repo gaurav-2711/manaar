@@ -9,10 +9,10 @@ public interface PageService {
 
     List<Page> getAllPage();
 
-    Page updatePage(Page page, Integer indexNo);
+    Page updatePage(Page page, Integer id);
 
-    void deletePage(Integer indexNo);
-
-    Page getPage(Integer indexNo);
+    void deletePage(Integer id);
+//
+//    Page getPage(Integer indexNo);
 
 }

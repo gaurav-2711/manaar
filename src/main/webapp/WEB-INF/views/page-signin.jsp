@@ -26,30 +26,34 @@
     <link href="../../lib/pickerjs/picker.min.css" rel="stylesheet" />
 
     <!-- Manaar CSS -->
-    <link rel="stylesheet" href="../../../css/style.css" />
+    <link rel="stylesheet"  href="static/css/style.css" />
   </head>
   <body class="az-body">
     <div class="az-signin-wrapper">
       <div class="az-card-signin">
         <h1 class="az-logo" style="color: #0f589e">Manaar<span></span></h1>
         <div class="az-signin-header">
-          <form action="index.html">
+          <form method="POST" action="${pageContext.request.contextPath}/login" modelAttribute="loginForm" >
             <div class="form-group">
               <label>Email</label>
-              <input type="text" class="form-control" placeholder="Enter your email" value="admin@manaarco.com" />
+              <input type="text" name="userName" class="form-control" placeholder="Enter your email"  />
             </div>
             <!-- form-group -->
             <div class="form-group">
               <label>Password</label>
-              <input type="password" class="form-control" placeholder="Enter your password" value="thisisademo" />
+              <input type="password" name="password" class="form-control" placeholder="Enter your password" />
             </div>
             <!-- form-group -->
-            <button class="btn btn-az-primary btn-block">Sign In</button>
+            <input type="hidden"
+                    name="${_csrf.parameterName}"
+                    value="${_csrf.token}"/>
+            <button type="submit" class="btn btn-az-primary btn-block">Sign In</button>
+             ${message}
           </form>
         </div>
         <!-- az-signin-header -->
         <div class="az-signin-footer">
-          <p><a href="">Forgot password?</a></p>
+          <p><a href="/register">Register</a></p>
         </div>
         <!-- az-signin-footer -->
       </div>
@@ -69,5 +73,6 @@
         "use strict";
       });
     </script>
+
   </body>
 </html>

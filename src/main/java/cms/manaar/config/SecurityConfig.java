@@ -2,6 +2,7 @@ package cms.manaar.config;
 
 import cms.manaar.filter.JwtFilter;
 import cms.manaar.service.impl.UserServiceImpl;
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,13 +37,14 @@ public class SecurityConfig {
         httpSecurity.cors((cors) -> cors.disable())
                 .csrf((csrf) -> csrf.disable())
                         .authorizeHttpRequests((req) -> req
-                                .requestMatchers("/register","/login").permitAll()
-                                .requestMatchers( "/page/**").permitAll()
-                                .requestMatchers( "/menu/**").permitAll()
-                                .requestMatchers("/getUsers","/getSpecificUser").hasAnyAuthority("VIEWER","ADMIN", "EDITOR")
-                                .requestMatchers(HttpMethod.PUT,"/updateUser/**").hasAnyAuthority("EDITOR", "ADMIN")
+                                .requestMatchers("/register").permitAll()
+                                .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .anyRequest().authenticated()
-                        ).httpBasic(Customizer.withDefaults());
+                        )
+                .formLogin().successForwardUrl("/home")
+//                .formLogin(form -> form.loginPage("/login").successForwardUrl("/home")
+//                        .permitAll())
+        ;
 
         httpSecurity.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();

@@ -33,10 +33,6 @@ public class UserController {
         return "user-add";
     }
 
-    @RequestMapping("/register")
-    public String registerUser() {
-        return "register";
-    }
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<User>> getAllUsers() {

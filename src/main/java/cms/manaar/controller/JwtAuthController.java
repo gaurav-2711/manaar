@@ -16,12 +16,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class JwtAuthController {
 
     public static final Logger logger = LoggerFactory.getLogger(JwtAuthController.class);
@@ -36,8 +35,8 @@ public class JwtAuthController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
+    public ModelAndView login(@ModelAttribute("loginForm") JwtRequest authenticationRequest) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
         try {
             logger.warn("authenticationRequest ::"+authenticationRequest.getPassword());
             logger.warn("authenticationRequest ::"+authenticationRequest.getUserName());
@@ -48,11 +47,14 @@ public class JwtAuthController {
 
             authenticate(authenticationRequest.getUserName(), authenticationRequest.getPassword());
 
+
+            modelAndView.setViewName("dashboard");
             HttpHeaders headers = getJwtHeader(credentials);
-            logger.warn("Headers :"+headers);
-            return new ResponseEntity<>(user, headers, HttpStatus.OK);
+
         } catch (Exception e) {
-            throw new AuthException("Username or Password not valid!");
+            modelAndView.setViewName("page-signin");
+        } finally {
+            return modelAndView;
         }
     }
 

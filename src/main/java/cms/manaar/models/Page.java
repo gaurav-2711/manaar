@@ -5,10 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.Date;
 
 @Table(name = "page_table")
 @Entity
@@ -21,17 +18,16 @@ public class Page {
     @Id
     @GeneratedValue
     private Integer id;
-    private String type;
+    private String alias;
+    private String metatitle;
+    private String metadescription;
     private String title;
-    private String shortHeading;
-    private String description;
+    private String shortdescription;
+    private String fulldescription;
+    private Integer faqid;
+    private Integer bannerid;
+    private Integer[] widgetid;
     private String bannerImg;
-    private Integer indexNo;
-    @CreationTimestamp
-    private Date entryDate;
-    @UpdateTimestamp
-    private Date modifyDate;
-    private Integer parentImageId;
 
     public Integer getId() {
         return id;
@@ -41,12 +37,28 @@ public class Page {
         this.id = id;
     }
 
-    public String getType() {
-        return type;
+    public String getAlias() {
+        return alias;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public String getMetatitle() {
+        return metatitle;
+    }
+
+    public void setMetatitle(String metatitle) {
+        this.metatitle = metatitle;
+    }
+
+    public String getMetadescription() {
+        return metadescription;
+    }
+
+    public void setMetadescription(String metadescription) {
+        this.metadescription = metadescription;
     }
 
     public String getTitle() {
@@ -57,20 +69,44 @@ public class Page {
         this.title = title;
     }
 
-    public String getShortHeading() {
-        return shortHeading;
+    public String getShortdescription() {
+        return shortdescription;
     }
 
-    public void setShortHeading(String shortHeading) {
-        this.shortHeading = shortHeading;
+    public void setShortdescription(String shortdescription) {
+        this.shortdescription = shortdescription;
     }
 
-    public String getDescription() {
-        return description;
+    public String getFulldescription() {
+        return fulldescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFulldescription(String fulldescription) {
+        this.fulldescription = fulldescription;
+    }
+
+    public Integer getFaqid() {
+        return faqid;
+    }
+
+    public void setFaqid(Integer faqid) {
+        this.faqid = faqid;
+    }
+
+    public Integer getBannerid() {
+        return bannerid;
+    }
+
+    public void setBannerid(Integer bannerid) {
+        this.bannerid = bannerid;
+    }
+
+    public Integer[] getWidgetid() {
+        return widgetid;
+    }
+
+    public void setWidgetid(Integer[] widgetid) {
+        this.widgetid = widgetid;
     }
 
     public String getBannerImg() {
@@ -79,37 +115,5 @@ public class Page {
 
     public void setBannerImg(String bannerImg) {
         this.bannerImg = bannerImg;
-    }
-
-    public Integer getIndexNo() {
-        return indexNo;
-    }
-
-    public void setIndexNo(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Date getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(Date entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public Integer getParentImageId() {
-        return parentImageId;
-    }
-
-    public void setParentImageId(Integer parentImageId) {
-        this.parentImageId = parentImageId;
     }
 }

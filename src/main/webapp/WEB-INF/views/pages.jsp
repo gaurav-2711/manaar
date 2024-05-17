@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -121,7 +121,7 @@
               <h2 class="az-content-title">Pages</h2>
             </div>
             <div class="col-md-3 float-md-right">
-              <form action="page/addPage">
+              <form action="/page/addPage">
                 <button class="btn btn-success btn-with-icon btn-block">
                   <i class="typcn typcn-plus"></i> Add Pages
                 </button>
@@ -140,28 +140,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Commercial Analytics</td>
-                  <td>commercial-analytics</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Technology Integration</td>
-                  <td>technology-integration</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
+
+                <c:forEach var="page" items="${pages}">
+                    <tr>
+                       <td>${page.title}</td>
+                       <td>${page.alias}</td>
+                       <td><i class="far fa-check-circle"></i></td>
+                       <td>
+                          <div class="btn-icon-list">
+                             <a href="#" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
+                             <a onclick="confirmDelete(${page.id})" class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
+                          </div>
+                       </td>
+                    </tr>
+                </c:forEach>
               </tbody>
             </table>
           </div>
@@ -333,6 +325,28 @@
           step: 250,
         });
       });
+
+        function confirmDelete(id) {
+                  var result = confirm("Are you sure you want to delete this page?");
+                  if (result) {
+                      // If user confirms, make an AJAX call to delete the page
+                      $.ajax({
+                          type: "DELETE",
+                          url: "/page/deletePage/" + id,
+                         success: function(response) {
+                                         alert(response); // Display the success message
+                                         // Optionally, you can reload the page or perform other actions
+                                         location.reload();
+                                     },
+                                     error: function(xhr, status, error) {
+                                         alert("Error deleting page: " + error); // Display the error message
+                                     }
+                      });
+                  } else {
+                      // If user cancels, do nothing
+                      return false;
+                  }
+              }
     </script>
   </body>
 </html>

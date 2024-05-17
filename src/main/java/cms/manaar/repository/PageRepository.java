@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PageRepository extends JpaRepository<Page, Integer> {
-    Page findByindexNo(Integer indexNo);
+//    Page findByindexNo(Integer indexNo);
 
-    void deleteByindexNo(Integer indexNo);
+//    void deleteByindexNo(Integer indexNo);
 
     @Override
     void delete(Page page);

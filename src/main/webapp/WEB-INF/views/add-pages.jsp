@@ -10,7 +10,7 @@
     <meta name="description" content="Manaar" />
     <meta name="author" content="Manaar" />
 
-    <title>Manaar | Admin</title>
+    <title>Manaar | Page</title>
 
     <!-- vendor css -->
     <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
@@ -97,7 +97,7 @@
             <h3 class="mg-b-20">Content</h3>
 
             <nav class="nav flex-column">
-              <a href="/pages" class="nav-link active">Pages</a>
+              <a href="/page" class="nav-link active">Pages</a>
               <a href="/resource" class="nav-link">Resources</a>
               <a href="/banner" class="nav-link">Banners</a>
               <a href="/faqs" class="nav-link">FAQS</a>
@@ -122,141 +122,145 @@
             </div>
           </div>
           <hr class="mg-y-10" />
-
-          <h4>Meta Tags</h4>
-          <div class="row row-sm">
-            <div class="col-lg-6">
-              <div class="az-content-label mg-t-20">Page Title</div>
-              <input class="form-control" placeholder="Commercial Analytics" type="text" />
-            </div>
-            <!-- col -->
-          </div>
-          <div class="row row-sm">
-            <div class="col-lg-6">
-              <div class="az-content-label mg-t-20">Description</div>
-              <textarea
-                rows="3"
-                class="form-control"
-                placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."></textarea>
-            </div>
-            <!-- col -->
-          </div>
-
-          <hr class="h10" />
-          <h4>Banner</h4>
-          <div class="row row-sm mg-t-20">
-            <div class="col-lg-3">
-              <div class="az-content-label mg-b-5">Select Banner</div>
-
-              <select class="form-control select2-no-search">
-                <option label="Choose one">Select Banner</option>
-                <option value="Firefox">Firefox</option>
-                <option value="Chrome">Chrome</option>
-                <option value="Safari">Safari</option>
-                <option value="Opera">Opera</option>
-                <option value="Internet Explorer">Internet Explorer</option>
-              </select>
-              <span class="spanrequired">Required *</span>
-            </div>
-            <!-- col-4 -->
-          </div>
-          <hr class="h10" />
-
-          <h4>Page Content</h4>
-          <div class="row row-sm mg-b-20">
-            <div class="col-lg-3">
-              <div class="az-content-label mg-b-5">Thumbnail</div>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile" />
-                <label class="custom-file-label" for="customFile">Choose file</label>
+          <form name="pagesform" id="pagesform" method="POST" modelAttribute="addPageForm" action="/page/save">
+            <h4>Meta Tags</h4>
+            <div class="row row-sm">
+              <div class="col-lg-6">
+                <div class="az-content-label mg-t-20">Page Title</div>
+                <input class="form-control" name="metatitle" placeholder="Commercial Analytics" type="text" />
               </div>
-              <span class="spanrequired">Required * 948px x 300px</span>
+              <!-- col -->
             </div>
-            <!-- col-4 -->
-          </div>
-          <div class="row row-sm">
-            <div class="col-lg-6">
-              <div class="az-content-label mg-t-20">Title</div>
-              <input class="form-control" placeholder="Commercial Analytics" type="text" />
+            <div class="row row-sm">
+              <div class="col-lg-6">
+                <div class="az-content-label mg-t-20">Description</div>
+                <textarea
+                  rows="3"
+                  class="form-control"
+                  name="metadescription"
+                  placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
+                ></textarea>
+              </div>
+              <!-- col -->
             </div>
-            <!-- col -->
-            <div class="col-lg-6">
-              <div class="az-content-label mg-t-20">Alias</div>
-              <input class="form-control" placeholder="commercial-analytics" type="text" />
-            </div>
-            <!-- col -->
-          </div>
 
-          <div class="row row-sm">
-            <div class="col-lg">
-              <div class="az-content-label mg-t-20">Short Description</div>
-              <div class="row row-sm">
-                <div class="col-lg">
-                  <textarea
-                    rows="3"
-                    class="form-control"
-                    placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."></textarea>
+            <hr class="h10" />
+            <h4>Banner</h4>
+            <div class="row row-sm mg-t-20">
+              <div class="col-lg-3">
+                <div class="az-content-label mg-b-5">Select Banner</div>
+
+                <select class="form-control select2-no-search" name="bannerid">
+                  <option label="Choose one">Select Banner</option>
+                  <option value="1">Firefox</option>
+                  <option value="2">Chrome</option>
+                  <option value="3">Safari</option>
+                  <option value="4">Opera</option>
+                  <option value="5">Internet Explorer</option>
+                </select>
+                <span class="spanrequired">Required *</span>
+              </div>
+              <!-- col-4 -->
+            </div>
+            <hr class="h10" />
+
+            <h4>Page Content</h4>
+            <div class="row row-sm mg-b-20">
+              <div class="col-lg-3">
+                <div class="az-content-label mg-b-5">Thumbnail</div>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" name="customFile" id="customFile" />
+                  <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
-                <!-- col -->
+                <span class="spanrequired">Required * 948px x 300px</span>
+              </div>
+              <!-- col-4 -->
+            </div>
+            <div class="row row-sm">
+              <div class="col-lg-6">
+                <div class="az-content-label mg-t-20">Title</div>
+                <input class="form-control" name="title" placeholder="Commercial Analytics" type="text" />
+              </div>
+              <!-- col -->
+              <div class="col-lg-6">
+                <div class="az-content-label mg-t-20">Alias</div>
+                <input class="form-control" name="alias" placeholder="commercial-analytics" type="text" />
+              </div>
+              <!-- col -->
+            </div>
+
+            <div class="row row-sm">
+              <div class="col-lg">
+                <div class="az-content-label mg-t-20">Short Description</div>
+                <div class="row row-sm">
+                  <div class="col-lg">
+                    <textarea
+                      rows="3"
+                      class="form-control"
+                      name="shortdescription"
+                      placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
+                    ></textarea>
+                  </div>
+                  <!-- col -->
+                </div>
+              </div>
+              <!-- col -->
+            </div>
+
+            <div class="az-content-label mg-t-20">Full Text</div>
+            <div class="row row-sm">
+              <div class="col-lg">
+                <textarea name="editor1" name="fulldescription"></textarea>
+              </div>
+              <!-- col -->
+            </div>
+
+            <hr class="h10" />
+            <h4>FAQs</h4>
+            <div class="row row-sm mg-t-20">
+              <div class="col-lg-3 mg-t-20 mg-lg-t-0">
+                <div class="az-content-label mg-b-5">Select FAQs</div>
+                <select class="form-control select2-no-search" name="faqid">
+                  <option label="Choose one">Select FAQ</option>
+                  <option value="1">Firefox</option>
+                  <option value="2">Chrome</option>
+                  <option value="3">Safari</option>
+                  <option value="4">Opera</option>
+                  <option value="5">Internet Explorer</option>
+                </select>
+                <span class="spaninfo">Optional</span>
+              </div>
+              <!-- col-4 -->
+            </div>
+
+            <hr class="h10" />
+            <h4>Widgets</h4>
+            <div class="row row-sm mg-t-20">
+              <div class="col-lg-3 mg-t-20 mg-lg-t-0">
+                <div class="az-content-label mg-b-5">Select Widget</div>
+                <select class="form-control select2" multiple="multiple" name="widgetid">
+                  <option value="1">Impactful investments</option>
+                  <option value="2">Featured Project</option>
+                  <option value="3">Key Insights</option>
+                  <option value="4">Manaar's MENA Expansion</option>
+                  <option value="5">Numbers</option>
+                </select>
+                <span class="spaninfo">Optional</span>
+              </div>
+              <!-- col-4 -->
+            </div>
+
+            <hr class="h10" />
+
+            <div class="row row-xs wd-xl-80p">
+              <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
+                <button class="btn btn-success btn-block" type="submit" >Save</button>
+              </div>
+              <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
+                <a class="btn btn-danger btn-block" href="/page">Cancel</a>
               </div>
             </div>
-            <!-- col -->
-          </div>
-
-          <div class="az-content-label mg-t-20">Full Text</div>
-          <div class="row row-sm">
-            <div class="col-lg">
-              <textarea name="editor1"></textarea>
-            </div>
-            <!-- col -->
-          </div>
-
-          <hr class="h10" />
-          <h4>FAQs</h4>
-          <div class="row row-sm mg-t-20">
-            <div class="col-lg-3 mg-t-20 mg-lg-t-0">
-              <div class="az-content-label mg-b-5">Select FAQs</div>
-              <select class="form-control select2-no-search">
-                <option label="Choose one">Select FAQ</option>
-                <option value="Firefox">Firefox</option>
-                <option value="Chrome">Chrome</option>
-                <option value="Safari">Safari</option>
-                <option value="Opera">Opera</option>
-                <option value="Internet Explorer">Internet Explorer</option>
-              </select>
-              <span class="spaninfo">Optional</span>
-            </div>
-            <!-- col-4 -->
-          </div>
-
-          <hr class="h10" />
-          <h4>Widgets</h4>
-          <div class="row row-sm mg-t-20">
-            <div class="col-lg-3 mg-t-20 mg-lg-t-0">
-              <div class="az-content-label mg-b-5">Select Widget</div>
-              <select class="form-control select2" multiple="multiple">
-                <option value="Impactful investments">Impactful investments</option>
-                <option value="Featured Project">Featured Project</option>
-                <option value="Key Insights">Key Insights</option>
-                <option value="Manaar's MENA Expansion">Manaar's MENA Expansion</option>
-                <option value="Numbers">Numbers</option>
-              </select>
-              <span class="spaninfo">Optional</span>
-            </div>
-            <!-- col-4 -->
-          </div>
-
-          <hr class="h10" />
-
-          <div class="row row-xs wd-xl-80p">
-            <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
-              <button class="btn btn-success btn-block">Update</button>
-            </div>
-            <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
-              <button class="btn btn-danger btn-block">Cancel</button>
-            </div>
-          </div>
-
+          </form>
           <hr />
         </div>
         <!-- az-content-body -->
@@ -269,7 +273,8 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
+      referrerpolicy="no-referrer"
+    ></script>
 
     <script src="../../lib/jquery-ui/ui/widgets/datepicker.js"></script>
     <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -284,7 +289,8 @@
     <script src="../../../js/cookie.js" type="text/javascript"></script>
     <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
 
-    <script src="../../js/bhuth.js"></script>
+    <script src="../../../js/bhuth.js"></script>
+
     <script>
       CKEDITOR.replace("editor1");
       CKEDITOR.replace("editor2");

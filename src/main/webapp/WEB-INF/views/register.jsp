@@ -67,7 +67,7 @@
         </div>
         <!-- az-signin-header -->
         <div class="az-signin-footer">
-          <p><a href="">Forgot password?</a></p>
+          <p><a href="/login">Already register ? </a></p>
         </div>
         <!-- az-signin-footer -->
       </div>

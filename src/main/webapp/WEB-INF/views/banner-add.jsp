@@ -122,11 +122,11 @@
               <h2 class="az-content-title">Banner</h2>
             </div>
           </div>
-
+        <form method="POST" action="/banner/save" modelAttribute="addBannerForm">
           <div class="row row-sm mg-b-20">
             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
               <div class="az-content-label">Banner Name</div>
-              <input class="form-control" placeholder="" type="text" />
+              <input class="form-control" name="bannerName" placeholder="" type="text" />
             </div>
             <!-- col-4 -->
           </div>
@@ -140,7 +140,7 @@
 Banner Image <span class="spaninfo">Image Dimensions 1920 x 1080</span>
               </div>
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile" />
+                <input type="file" class="custom-file-input" id="customFile" name="customFile" />
                 <label class="custom-file-label" for="customFile">Choose file</label>
               </div>
             </div>
@@ -152,7 +152,7 @@ Banner Image <span class="spaninfo">Image Dimensions 1920 x 1080</span>
           <div class="row row-sm mg-b-20">
             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
               <div class="az-content-label">Banner Heading <span class="spaninfo">40 Characters</span></div>
-              <input class="form-control" placeholder="" type="text" />
+              <input class="form-control" placeholder="" name="bannerHeading" type="text" />
             </div>
             <!-- col -->
           </div>
@@ -169,7 +169,7 @@ Banner Image <span class="spaninfo">Image Dimensions 1920 x 1080</span>
             <!-- col-3 -->
             <div class="col-lg-2 mg-t-20 mg-lg-t-0">
               <label class="rdiobox">
-                <input name="rdio" type="radio" checked="" />
+                <input name="rdio" type="radio" name="status" checked="" />
                 <span>Disable</span>
               </label>
             </div>
@@ -179,13 +179,13 @@ Banner Image <span class="spaninfo">Image Dimensions 1920 x 1080</span>
           <hr />
           <div class="row row-xs wd-xl-80p">
             <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
-              <button class="btn btn-success btn-block">Submit</button>
+              <button class="btn btn-success btn-block" type="submit">Submit</button>
             </div>
             <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
-              <button class="btn btn-danger btn-block">Cancel</button>
+              <button class="btn btn-danger btn-block" href="/banner">Cancel</button>
             </div>
           </div>
-
+        </form>
           <hr />
         </div>
       </div>

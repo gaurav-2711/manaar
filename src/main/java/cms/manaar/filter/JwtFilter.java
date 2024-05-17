@@ -32,6 +32,12 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException, InsufficientAuthenticationException {
 
+
+        if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         final String requestTokenHeader = request.getHeader("Authorization");
         logger.warn(requestTokenHeader);
 
