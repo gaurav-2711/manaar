@@ -11,7 +11,7 @@
     <meta name="description" content="Manaar" />
     <meta name="author" content="Manaar" />
 
-    <title>Manaar | Admin</title>
+    <title>Manaar | Page</title>
 
     <!-- vendor css -->
     <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
@@ -148,7 +148,7 @@
                        <td><i class="far fa-check-circle"></i></td>
                        <td>
                           <div class="btn-icon-list">
-                             <a href="#" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
+                             <a href="/page/edit/${page.id}" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
                              <a onclick="confirmDelete(${page.id})" class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
                           </div>
                        </td>
@@ -334,9 +334,8 @@
                           type: "DELETE",
                           url: "/page/deletePage/" + id,
                          success: function(response) {
-                                         alert(response); // Display the success message
-                                         // Optionally, you can reload the page or perform other actions
                                          location.reload();
+
                                      },
                                      error: function(xhr, status, error) {
                                          alert("Error deleting page: " + error); // Display the error message

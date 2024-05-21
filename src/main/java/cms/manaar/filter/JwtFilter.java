@@ -6,6 +6,7 @@ import cms.manaar.config.JwtUtils;
 import cms.manaar.models.User;
 import cms.manaar.models.UserCredentials;
 import cms.manaar.service.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,21 +33,23 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException, InsufficientAuthenticationException {
 
+        HttpSession session = request.getSession();
 
-        if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register")) {
+
+        if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/register") || request.getRequestURI().equals("/authlogin") ) {
             chain.doFilter(request, response);
             return;
         }
 
-        final String requestTokenHeader = request.getHeader("Authorization");
-        logger.warn(requestTokenHeader);
+//        final String requestTokenHeader = request.getHeader("Authorization");
+        final String requestTokenHeader = (String) session.getAttribute("jwtToken");
+
+//        logger.warn(requestTokenHeader);
 
         String username = null;
-        String jwtToken = null;
+        String jwtToken = (String) session.getAttribute("jwtToken");
 
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-             jwtToken = requestTokenHeader.substring(7);
-
+        if (jwtToken != null) {
             try {
                 username = jwtUtils.getUsernameFromToken(jwtToken);
                 System.out.println("username : "+username);
@@ -69,7 +72,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 if (jwtUtils.validateToken(jwtToken, user)) {
                     UsernamePasswordAuthenticationToken authenticationToken =
-                            new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword(), user.getAuthorities());
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }

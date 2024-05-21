@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -123,10 +124,15 @@
             </div>
           </div>
 
+		<form
+				<c:if test="${flag ne 'edit'}">action="/faqs/save" method="POST" modelAttribute="addFaqsForm"</c:if>
+               <c:if test="${flag eq 'edit'}">action="/faqs/update" method="POST" modelAttribute="updateFaqsForm"</c:if>
+		>
+		   <input type="hidden" id="id" name="id" value="${updateFaqs.id}" />
           <div class="row row-sm mg-b-20">
             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
-              <div class="az-content-label">FAQ Name</div>
-              <input class="form-control" placeholder="" type="text" />
+              <div class="az-content-label" >FAQ Name</div>
+              <input class="form-control" name = "faqName" value="${updateFaqs.faqName}" placeholder="" type="text" Required/>
             </div>
             <!-- col-4 -->
           </div>
@@ -135,7 +141,7 @@
           <div class="row row-sm mg-b-20">
             <div class="col-lg-6 mg-t-20 mg-lg-t-0">
               <div class="az-content-label">Alias</div>
-              <input class="form-control" placeholder="" type="text" />
+              <input class="form-control" name="alias" value="${updateFaqs.alias}" placeholder="" type="text" />
             </div>
             <!-- col-4 -->
           </div>
@@ -154,8 +160,8 @@
             <div class="row row-sm faq-row">
               <div class="col-lg-6 mg-lg-t-0">
                 <div class="az-content-label mg-t-20">FAQ 01</div>
-                <input class="form-control mg-t-20" id="faq-01-question" placeholder="Question" type="text" />
-                <textarea rows="7" id="faq-01-answer" class="form-control mg-t-20" placeholder="Answer"></textarea>
+                <input class="form-control mg-t-20" name="queAnsList[0].question" id="faq-01-question" placeholder="Question" type="text" />
+                <textarea rows="7" id="faq-01-answer" name="queAnsList[0].answer" class="form-control mg-t-20" placeholder="Answer"></textarea>
               </div>
               <!-- col -->
             </div>
@@ -168,14 +174,14 @@
           <div class="row mg-t-10">
             <div class="col-lg-2">
               <label class="rdiobox">
-                <input name="rdio" type="radio" />
+                   <input name="status" type="radio" value="true" checked />
                 <span>Enable</span>
               </label>
             </div>
             <!-- col-3 -->
             <div class="col-lg-2 mg-t-20 mg-lg-t-0">
               <label class="rdiobox">
-                <input name="rdio" type="radio" checked="" />
+                    <input type="radio" name="status" value="false" />
                 <span>Disable</span>
               </label>
             </div>
@@ -185,14 +191,20 @@
           <hr />
           <div class="row row-xs wd-xl-80p">
             <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
-              <button class="btn btn-success btn-block">Submit</button>
+               <c:if test="${flag=='edit'}">
+                    <button class="btn btn-success btn-block" type="submit">Update</button>
+               </c:if>
+               <c:if test="${flag!='edit'}">
+                    <button class="btn btn-success btn-block" type="submit">Submit</button>
+                </c:if>
             </div>
             <div class="col-sm-6 col-md-3 mg-t-10 mg-md-t-0">
               <button class="btn btn-danger btn-block">Cancel</button>
             </div>
           </div>
+           <hr />
+		</form>
 
-          <hr />
         </div>
       </div>
       <!-- container -->

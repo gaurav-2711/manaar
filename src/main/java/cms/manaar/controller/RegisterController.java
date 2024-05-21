@@ -1,6 +1,9 @@
 package cms.manaar.controller;
 
 import cms.manaar.models.JwtRequest;
+import cms.manaar.models.User;
+import cms.manaar.models.UserCredentials;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,8 +17,6 @@ public class RegisterController {
 
     @RequestMapping("/login")
     public String login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("page-signin");
         return "page-signin";
     }
 }

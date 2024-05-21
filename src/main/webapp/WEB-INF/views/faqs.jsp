@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -140,28 +141,27 @@
                 </tr>
               </thead>
               <tbody>
+                <c:forEach var="faq" items="${faqs}">
                 <tr>
-                  <td>1</td>
-                  <td>Commercial Analytics</td>
-                  <td><i class="far fa-times-circle red"></i></td>
+                  <td>${faq.id}</td>
+                  <td>${faq.faqName}</td>
+                  <td><i <c:if test= "${faq.status eq true}">
+                         class="far fa-check-circle green"
+                      </c:if>
+                      <c:if test= "${faq.status eq false}">
+                         class="far fa-times-circle red"
+                      </c:if> >
+                     </i>
+                  </td>
                   <td>
                     <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
+                      <a href="/faqs/edit/${faq.id}" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
+                      <a onclick="confirmDelete(${faq.id})" class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Resources</td>
-                  <td><i class="far fa-check-circle green"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
+                </c:forEach>
+
               </tbody>
             </table>
           </div>
@@ -332,6 +332,28 @@
           step: 250,
         });
       });
+
+
+
+        function confirmDelete(id) {
+                        var result = confirm("Are you sure you want to delete this faqs?");
+                        if (result) {
+                            // If user confirms, make an AJAX call to delete the page
+                            $.ajax({
+                                type: "DELETE",
+                                url: "/faqs/deleteFaqs/" + id,
+                               success: function(response) {
+                                               location.reload();
+                                           },
+                                           error: function(xhr, status, error) {
+                                               alert("Error deleting faqs: " + error); // Display the error message
+                                           }
+                            });
+                        } else {
+                            // If user cancels, do nothing
+                            return false;
+                        }
+                    }
     </script>
   </body>
 </html>

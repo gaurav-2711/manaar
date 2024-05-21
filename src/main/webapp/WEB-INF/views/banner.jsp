@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -142,36 +143,26 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Commercial Analytics</td>
-                  <td>Commercial Analytics Technology Development</td>
-                  <td>
-                    <div class="imagePreviewBanner"><img src="../../img/faces/face1.jpg" alt="" /></div>
-                  </td>
-                  <td><i class="far fa-times-circle red"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Resources</td>
-                  <td>Energy Investments & Technology Development</td>
-                  <td>
-                    <div class="imagePreviewBanner"><img src="../../img/faces/face1.jpg" alt="" /></div>
-                  </td>
-                  <td><i class="far fa-check-circle green"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
+               <c:forEach var="banner" items="${banners}">
+                            <tr>
+                               <td>${banner.id}</td>
+                                 <td>${banner.bannerName}</td>
+                                <td>${banner.bannerHeading}</td>
+                                <td>
+                                <div class="imagePreviewBanner"><img src="../../img/faces/face1.jpg" alt="" /></div>
+                                </td>
+                                <td><i <c:if test= "${banner.status eq true}">class="far fa-check-circle green"</c:if>
+                                <c:if test= "${banner.status eq false}"> class="far fa-times-circle red"</c:if>
+                                ></i></td>
+                                <td>
+                                <div class="btn-icon-list">
+                                     <a href="/banner/edit/${banner.id}" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
+                                      <a onclick="confirmDelete(${banner.id})" class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
+                                  </div>
+                                </td>
+                                 </tr>
+               </c:forEach>
+
               </tbody>
             </table>
           </div>
@@ -342,6 +333,26 @@
           step: 250,
         });
       });
+
+
+      function confirmDelete(id) {
+                        var result = confirm("Are you sure you want to delete this banner?");
+                        if (result) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: "/banner/deleteBanner/" + id,
+                               success: function(response) {
+                                               location.reload();
+                                           },
+                                           error: function(xhr, status, error) {
+                                               alert("Error deleting banner: " + error); // Display the error message
+                                           }
+                            });
+                        } else {
+                            // If user cancels, do nothing
+                            return false;
+                        }
+                    }
     </script>
   </body>
 </html>

@@ -2,10 +2,13 @@ package cms.manaar.controller;
 
 import cms.manaar.config.JwtUtils;
 import cms.manaar.models.JwtRequest;
+import cms.manaar.models.Role;
 import cms.manaar.models.User;
 import cms.manaar.models.UserCredentials;
 import cms.manaar.service.UserService;
 import jakarta.security.auth.message.AuthException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 public class JwtAuthController {
@@ -34,9 +43,9 @@ public class JwtAuthController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(@ModelAttribute("loginForm") JwtRequest authenticationRequest) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
+    @RequestMapping(value = "/authlogin", method = RequestMethod.POST)
+    public String login(@ModelAttribute("loginForm") JwtRequest authenticationRequest, HttpServletRequest request) throws Exception {
+//        ModelAndView modelAndView = new ModelAndView();
         try {
             logger.warn("authenticationRequest ::"+authenticationRequest.getPassword());
             logger.warn("authenticationRequest ::"+authenticationRequest.getUserName());
@@ -45,17 +54,28 @@ public class JwtAuthController {
 
             UserCredentials credentials = new UserCredentials(user);
 
-            authenticate(authenticationRequest.getUserName(), authenticationRequest.getPassword());
+            authenticate(authenticationRequest.getUserName(), authenticationRequest.getPassword(), credentials.getAuthorities());
 
+            String jwtToken = jwtUtils.generateToken(credentials);
+            HttpSession session = request.getSession();
+            session.setAttribute("jwtToken", jwtToken);
 
-            modelAndView.setViewName("dashboard");
-            HttpHeaders headers = getJwtHeader(credentials);
+            return "redirect:/home";
+
+//            modelAndView.setViewName("dashboard");
+//            HttpHeaders headers = getJwtHeader(credentials);
 
         } catch (Exception e) {
-            modelAndView.setViewName("page-signin");
-        } finally {
-            return modelAndView;
+
+//            modelAndView.setViewName("page-signin");
+            HttpSession session = request.getSession(false); // Retrieve existing session if it exists
+            if (session != null) {
+                session.invalidate(); // Invalidate the session
+            }
+            return "redirect:/login";
+
         }
+
     }
 
     private HttpHeaders getJwtHeader(UserCredentials user) {
@@ -64,9 +84,10 @@ public class JwtAuthController {
         return headers;
     }
 
-    private void authenticate(String username, String password) throws Exception {
+    private void authenticate(String username, String password, Collection<? extends GrantedAuthority> roles) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+           Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password, roles));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

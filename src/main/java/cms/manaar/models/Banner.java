@@ -1,17 +1,21 @@
 package cms.manaar.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-//@Table(name = "banner_table")
-//@Entity
+@Table(name = "banner_table")
+@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Banner {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String bannerName;
     private String bannerHeading;

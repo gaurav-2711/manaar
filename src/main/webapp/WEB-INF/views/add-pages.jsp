@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -118,16 +120,20 @@
 
           <div class="row">
             <div class="col-md-6">
-              <h2 class="az-content-title">Add Page</h2>
+              <h2 class="az-content-title"><c:if test="${flag eq 'edit'}">Update</c:if><c:if test="${flag ne 'edit'}">Add</c:if> Page</h2>
             </div>
           </div>
           <hr class="mg-y-10" />
-          <form name="pagesform" id="pagesform" method="POST" modelAttribute="addPageForm" action="/page/save">
+
+          <form name="pagesform" id="pagesform"  <c:if test="${flag eq 'edit'}">action="/page/update" method="POST" modelAttribute="updatePageForm"</c:if>
+                                                <c:if test="${flag ne 'edit'}">action="/page/save"method="POST" modelAttribute="addPageForm"</c:if>  >
+            <input type="hidden" id="id" name="id" value="${updatePage.id}" />
             <h4>Meta Tags</h4>
             <div class="row row-sm">
               <div class="col-lg-6">
                 <div class="az-content-label mg-t-20">Page Title</div>
-                <input class="form-control" name="metatitle" placeholder="Commercial Analytics" type="text" />
+                <input class="form-control" name="metatitle" placeholder="Commercial Analytics" type="text" value="${updatePage.metatitle}" Required/>
+                <span class="spanrequired">Required *</span>
               </div>
               <!-- col -->
             </div>
@@ -138,8 +144,10 @@
                   rows="3"
                   class="form-control"
                   name="metadescription"
+                  Required
                   placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
-                ></textarea>
+                >${updatePage.metadescription}</textarea>
+                <span class="spanrequired">Required *</span>
               </div>
               <!-- col -->
             </div>
@@ -150,14 +158,15 @@
               <div class="col-lg-3">
                 <div class="az-content-label mg-b-5">Select Banner</div>
 
-                <select class="form-control select2-no-search" name="bannerid">
-                  <option label="Choose one">Select Banner</option>
-                  <option value="1">Firefox</option>
-                  <option value="2">Chrome</option>
-                  <option value="3">Safari</option>
-                  <option value="4">Opera</option>
-                  <option value="5">Internet Explorer</option>
+                <select class="form-control select2" name="bannerid" required>
+                    <option value="0" label="Choose one">Select Banner</option>
+                    <option value="1" ${updatePage.bannerid == '1' ? 'selected' : ''}>Firefox</option>
+                    <option value="2" ${updatePage.bannerid == '2' ? 'selected' : ''}>Chrome</option>
+                    <option value="3" ${updatePage.bannerid == '3' ? 'selected' : ''}>Safari</option>
+                    <option value="4" ${updatePage.bannerid == '4' ? 'selected' : ''}>Opera</option>
+                    <option value="5" ${updatePage.bannerid == '5' ? 'selected' : ''}>Internet Explorer</option>
                 </select>
+
                 <span class="spanrequired">Required *</span>
               </div>
               <!-- col-4 -->
@@ -167,24 +176,25 @@
             <h4>Page Content</h4>
             <div class="row row-sm mg-b-20">
               <div class="col-lg-3">
-                <div class="az-content-label mg-b-5">Thumbnail</div>
+                <div class="az-content-label mg-b-5" >Thumbnail</div>
                 <div class="custom-file">
-                  <input type="file" class="custom-file-input" name="customFile" id="customFile" />
+                  <input type="file" class="custom-file-input" name="customFile" id="customFile" required/>
                   <label class="custom-file-label" for="customFile">Choose file</label>
+                   <span class="spanrequired">Required *</span>
                 </div>
-                <span class="spanrequired">Required * 948px x 300px</span>
               </div>
               <!-- col-4 -->
             </div>
             <div class="row row-sm">
               <div class="col-lg-6">
                 <div class="az-content-label mg-t-20">Title</div>
-                <input class="form-control" name="title" placeholder="Commercial Analytics" type="text" />
+                <input class="form-control" id= "title" oninput="updateAlias()" name="title" placeholder="Commercial Analytics" type="text"  value="${updatePage.title}" required/>
+              <span class="spanrequired">Required *</span>
               </div>
               <!-- col -->
               <div class="col-lg-6">
                 <div class="az-content-label mg-t-20">Alias</div>
-                <input class="form-control" name="alias" placeholder="commercial-analytics" type="text" />
+                <input class="form-control"  id="alias" name="alias" type="text" value="${updatePage.alias}" required/>
               </div>
               <!-- col -->
             </div>
@@ -198,8 +208,10 @@
                       rows="3"
                       class="form-control"
                       name="shortdescription"
+                      required
                       placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
-                    ></textarea>
+                    > ${updatePage.shortdescription}</textarea>
+                    <span class="spanrequired">Required *</span>
                   </div>
                   <!-- col -->
                 </div>
@@ -210,7 +222,8 @@
             <div class="az-content-label mg-t-20">Full Text</div>
             <div class="row row-sm">
               <div class="col-lg">
-                <textarea name="editor1" name="fulldescription"></textarea>
+                <textarea name="editor1" name="fulldescription" required>${updatePage.fulldescription}</textarea>
+                <span class="spanrequired">Required *</span>
               </div>
               <!-- col -->
             </div>
@@ -220,13 +233,13 @@
             <div class="row row-sm mg-t-20">
               <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                 <div class="az-content-label mg-b-5">Select FAQs</div>
-                <select class="form-control select2-no-search" name="faqid">
-                  <option label="Choose one">Select FAQ</option>
-                  <option value="1">Firefox</option>
-                  <option value="2">Chrome</option>
-                  <option value="3">Safari</option>
-                  <option value="4">Opera</option>
-                  <option value="5">Internet Explorer</option>
+                <select class="form-control select2" name="faqid" >
+                    <option  value="0" label="Choose one">Choose one</option>
+                    <option value="1" ${updatePage.faqid == '1' ? 'selected' : ''}>Firefox</option>
+                    <option value="2" ${updatePage.faqid == '2' ? 'selected' : ''}>Chrome</option>
+                    <option value="3" ${updatePage.faqid == '3' ? 'selected' : ''}>Safari</option>
+                    <option value="4" ${updatePage.faqid == '4' ? 'selected' : ''}>Opera</option>
+                    <option value="5" ${updatePage.faqid == '5' ? 'selected' : ''}>Internet Explorer</option>
                 </select>
                 <span class="spaninfo">Optional</span>
               </div>
@@ -239,12 +252,13 @@
               <div class="col-lg-3 mg-t-20 mg-lg-t-0">
                 <div class="az-content-label mg-b-5">Select Widget</div>
                 <select class="form-control select2" multiple="multiple" name="widgetid">
-                  <option value="1">Impactful investments</option>
-                  <option value="2">Featured Project</option>
-                  <option value="3">Key Insights</option>
-                  <option value="4">Manaar's MENA Expansion</option>
-                  <option value="5">Numbers</option>
+                  <option value="1" ${updatePage.widgetid == '1' ? 'selected' : ''}>Impactful investments</option>
+                  <option value="2" ${updatePage.widgetid == '2' ? 'selected' : ''}>Featured Project</option>
+                  <option value="3" ${updatePage.widgetid == '3' ? 'selected' : ''}>Key Insights</option>
+                  <option value="4" ${updatePage.widgetid == '4' ? 'selected' : ''}>Manaar's MENA Expansion</option>
+                  <option value="5" ${updatePage.widgetid == '5' ? 'selected' : ''}>Numbers</option>
                 </select>
+
                 <span class="spaninfo">Optional</span>
               </div>
               <!-- col-4 -->
@@ -254,7 +268,12 @@
 
             <div class="row row-xs wd-xl-80p">
               <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
-                <button class="btn btn-success btn-block" type="submit" >Save</button>
+              <c:if test="${flag=='edit'}">
+                    <button class="btn btn-success btn-block" type="submit" >Update</button>
+               </c:if>
+                <c:if test="${flag!='edit'}">
+                    <button class="btn btn-success btn-block" type="submit" >Save</button>
+             </c:if>
               </div>
               <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
                 <a class="btn btn-danger btn-block" href="/page">Cancel</a>
@@ -421,5 +440,12 @@
         });
       });
     </script>
+    <script type="text/javascript">
+           function updateAlias() {
+               var title = document.getElementById('title').value;
+               var alias = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]+/g, '-');
+               document.getElementById('alias').value = alias;
+           }
+       </script>
   </body>
 </html>

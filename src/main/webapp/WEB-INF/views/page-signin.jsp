@@ -1,10 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-textdirection="ltr" class="loading">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Meta -->
@@ -14,26 +17,20 @@
     <title>Manaar | Admin</title>
 
     <!-- vendor css -->
-    <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    <link href="../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" />
-    <link href="../../lib/typicons.font/typicons.css" rel="stylesheet" />
-    <link href="../../lib/spectrum-colorpicker/spectrum.css" rel="stylesheet" />
-    <link href="../../lib/select2/css/select2.min.css" rel="stylesheet" />
-    <link href="../../lib/ion-rangeslider/css/ion.rangeSlider.css" rel="stylesheet" />
-    <link href="../../lib/ion-rangeslider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet" />
-    <link href="../../lib/amazeui-datetimepicker/css/amazeui.datetimepicker.css" rel="stylesheet" />
-    <link href="../../lib/jquery-simple-datetimepicker/jquery.simple-dtpicker.css" rel="stylesheet" />
-    <link href="../../lib/pickerjs/picker.min.css" rel="stylesheet" />
-
+    <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../../lib/ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <link href="../../lib/typicons.font/typicons.css" rel="stylesheet" type="text/css"/>
+    <link href="../../lib/spectrum-colorpicker/spectrum.css" rel="stylesheet" type="text/css"/>
     <!-- Manaar CSS -->
-    <link rel="stylesheet"  href="static/css/style.css" />
+    <link rel="stylesheet"  href="static/css/style.css"type="text/css" />
+
   </head>
   <body class="az-body">
     <div class="az-signin-wrapper">
       <div class="az-card-signin">
         <h1 class="az-logo" style="color: #0f589e">Manaar<span></span></h1>
         <div class="az-signin-header">
-          <form method="POST" action="${pageContext.request.contextPath}/login" modelAttribute="loginForm" >
+          <form method="POST" action="/authlogin" modelAttribute="loginForm" >
             <div class="form-group">
               <label>Email</label>
               <input type="text" name="userName" class="form-control" placeholder="Enter your email"  />
@@ -60,14 +57,19 @@
       <!-- az-card-signin -->
     </div>
     <!-- az-signin-wrapper -->
+ <script type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+ </script>
 
-    <script src="../../lib/jquery/jquery.min.js"></script>
-    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../../lib/ionicons/ionicons.js"></script>
-    <script src="../../js/jquery.cookie.js" type="text/javascript"></script>
-    <script src="../../js/jquery.cookie.js" type="text/javascript"></script>
-
-    <script src="../../js/azia.js"></script>
+    <script src="../../lib/jquery-ui/ui/widgets/datepicker.js" type="text/javascript"></script>
+    <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="../../lib/ionicons/ionicons.js" type="text/javascript"></script>
+    <script src="../../lib/jquery.maskedinput/jquery.maskedinput.js" type="text/javascript"></script>
+    <script src="../../js/cookie.js" type="text/javascript"></script>
+    <script src="../../js/bhuth.js" type="text/javascript"></script>
     <script>
       $(function () {
         "use strict";

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 //@RequestMapping("/page")
@@ -53,10 +54,24 @@ public class PageController {
 //
 //        return ResponseEntity.ok(pageService.getAllPage());
 //    }
+@GetMapping("/page/edit/{id}")
+public String updatePage(Model model,@PathVariable Integer id) {
+    Optional<Page> optionalPage = pageService.getById(id);
+    if (optionalPage.isPresent()) {
+        Page page = optionalPage.get();
+        model.addAttribute("flag","edit");
+        model.addAttribute("updatePage",page);
+        return "add-pages";
+    }
 
-    @PutMapping("/page/updatePage/{indexNo}")
-    public ResponseEntity<Page> updatePage(@RequestBody Page page, @PathVariable Integer id) {
-        return ResponseEntity.ok(pageService.updatePage(page, id));
+    return "pages";
+}
+
+    @RequestMapping(value = {"/page/update"},  method = RequestMethod.POST)
+    public String editPage(@ModelAttribute("updatePageForm") Page page) {
+        System.out.println("id: "+page.getId());
+        pageService.updatePage(page, page.getId());
+        return "redirect:/page";
     }
 
     @DeleteMapping("/page/deletePage/{id}")

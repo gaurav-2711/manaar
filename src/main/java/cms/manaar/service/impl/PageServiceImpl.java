@@ -53,6 +53,11 @@ public class PageServiceImpl implements PageService {
     public void deletePage(Integer id) {
         pageRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Page> getById(Integer id) {
+        return pageRepository.findById(id);
+    }
 //
 //    @Override
 //    public Page getPage(Integer indexNo) {
