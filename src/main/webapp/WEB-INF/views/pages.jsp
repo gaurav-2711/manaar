@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@taglib prefix="c" uri="jakarta.tags.core"%>
 
 <html lang="en">
   <head>
@@ -93,22 +92,7 @@
 
     <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
       <div class="container">
-        <div class="az-content-left az-content-left-components">
-          <div class="component-item">
-            <h3 class="mg-b-20">Content</h3>
-
-            <nav class="nav flex-column">
-              <a href="/page" class="nav-link active">Pages</a>
-              <a href="/resource" class="nav-link">Resources</a>
-              <a href="/banner" class="nav-link">Banners</a>
-              <a href="/faqs" class="nav-link">FAQS</a>
-              <a href="/category" class="nav-link">Category</a>
-              <a href="/tags" class="nav-link">Tags</a>
-              <a href="/widgets" class="nav-link">Widgets</a>
-            </nav>
-          </div>
-          <!-- component-item -->
-        </div>
+        <jsp:include page="adminmenu.jsp" />
         <!-- az-content-left -->
         <div class="az-content-body pd-lg-l-40 d-flex flex-column">
           <div class="az-content-breadcrumb">
@@ -122,9 +106,7 @@
             </div>
             <div class="col-md-3 float-md-right">
               <form action="/page/addPage">
-                <button class="btn btn-success btn-with-icon btn-block">
-                  <i class="typcn typcn-plus"></i> Add Pages
-                </button>
+                <button class="btn btn-success btn-with-icon btn-block"><i class="typcn typcn-plus"></i> Add Pages</button>
               </form>
             </div>
           </div>
@@ -140,19 +122,20 @@
                 </tr>
               </thead>
               <tbody>
-
                 <c:forEach var="page" items="${pages}">
-                    <tr>
-                       <td>${page.title}</td>
-                       <td>${page.alias}</td>
-                       <td><i class="far fa-check-circle"></i></td>
-                       <td>
-                          <div class="btn-icon-list">
-                             <a href="/page/edit/${page.id}" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                             <a onclick="confirmDelete(${page.id})" class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                          </div>
-                       </td>
-                    </tr>
+                  <tr>
+                    <td>${page.title}</td>
+                    <td>${page.alias}</td>
+                    <td><i class="far fa-check-circle"></i></td>
+                    <td>
+                      <div class="btn-icon-list">
+                        <a href="/page/edit/${page.id}" class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
+                        <a onclick="confirmDelete(${page.id})" class="btn btn-primary btn-icon"
+                          ><i class="typcn typcn-delete-outline"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
                 </c:forEach>
               </tbody>
             </table>
@@ -181,7 +164,8 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="../../lib/jquery-ui/ui/widgets/datepicker.js"></script>
     <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../lib/ionicons/ionicons.js"></script>
@@ -326,26 +310,25 @@
         });
       });
 
-        function confirmDelete(id) {
-                  var result = confirm("Are you sure you want to delete this page?");
-                  if (result) {
-                      // If user confirms, make an AJAX call to delete the page
-                      $.ajax({
-                          type: "DELETE",
-                          url: "/page/deletePage/" + id,
-                         success: function(response) {
-                                         location.reload();
-
-                                     },
-                                     error: function(xhr, status, error) {
-                                         alert("Error deleting page: " + error); // Display the error message
-                                     }
-                      });
-                  } else {
-                      // If user cancels, do nothing
-                      return false;
-                  }
-              }
+      function confirmDelete(id) {
+        var result = confirm("Are you sure you want to delete this page?");
+        if (result) {
+          // If user confirms, make an AJAX call to delete the page
+          $.ajax({
+            type: "DELETE",
+            url: "/page/deletePage/" + id,
+            success: function (response) {
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              alert("Error deleting page: " + error); // Display the error message
+            },
+          });
+        } else {
+          // If user cancels, do nothing
+          return false;
+        }
+      }
     </script>
   </body>
 </html>

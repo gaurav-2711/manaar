@@ -10,5 +10,5 @@ public interface ResourceService {
     List<Resource> getAll();
     Resource addResource(Resource resource);
     void deleteById(Integer id);
-    Resource update(Integer id, Resource resource);
+   Resource update(Integer id, Resource resource);
 }

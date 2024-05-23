@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,7 @@
     <meta name="description" content="Manaar" />
     <meta name="author" content="Manaar" />
 
-    <title>Manaar | Admin</title>
+    <title>Manaar | Resource</title>
 
     <!-- vendor css -->
     <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
@@ -30,68 +32,7 @@
   </head>
 
   <body>
-    <div class="az-header">
-      <div class="container">
-        <div class="az-header-left">
-          <a href="index.html" class="az-logo"><span></span> Manaar</a>
-          <a href="" id="azMenuShow" class="az-header-menu-icon d-lg-none"><span></span></a>
-        </div>
-        <!-- az-header-left -->
-        <div class="az-header-menu">
-          <div class="az-header-menu-header">
-            <a href="index.html" class="az-logo"><span></span> Manaar</a>
-            <a href="" class="close">&times;</a>
-          </div>
-          <!-- az-header-menu-header -->
-          <ul class="nav">
-            <li class="nav-item">
-              <a href="/home" class="nav-link"><i class="typcn typcn-chart-area-outline"></i> Dashboard</a>
-            </li>
-            <li class="nav-item active">
-              <a href="/content" class="nav-link"><i class="typcn typcn-document"></i> Content</a>
-            </li>
-            <li class="nav-item">
-              <a href="/menu" class="nav-link"><i class="typcn typcn-chart-bar-outline"></i> Menu</a>
-            </li>
-          </ul>
-        </div>
-        <!-- az-header-menu -->
-        <div class="az-header-right">
-          <div class="az-header-notification">
-            <a href="/user" class=""><i class="typcn typcn-group"></i></a>
-          </div>
-          <!-- az-header-notification -->
-          <div class="dropdown az-profile-menu">
-            <a href="" class="az-img-user"><img src="../../img/faces/face1.jpg" alt="" /></a>
-            <div class="dropdown-menu">
-              <div class="az-dropdown-header d-sm-none">
-                <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
-              </div>
-              <div class="az-header-profile">
-                <div class="az-img-user">
-                  <img src="../../img/faces/face1.jpg" alt="" />
-                </div>
-                <!-- az-img-user -->
-                <h6>Asif Ameer</h6>
-                <span>Expert Researcher</span>
-              </div>
-              <!-- az-header-profile -->
-
-              <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
-              <a href="" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
-
-              <a href="" class="dropdown-item"><i class="typcn typcn-cog-outline"></i> Account Settings</a>
-              <a href="/page/pageSignin" class="dropdown-item"><i class="typcn typcn-power-outline"></i> Sign Out</a>
-            </div>
-            <!-- dropdown-menu -->
-          </div>
-        </div>
-        <!-- az-header-right -->
-      </div>
-      <!-- container -->
-    </div>
-    <!-- az-header -->
-
+    <jsp:include page="adminheader.jsp" /> 
     <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
       <div class="container">
         <div class="az-content-left az-content-left-components">
@@ -119,19 +60,21 @@
           </div>
           <div class="row">
             <div class="col-md-9">
-              <h2 class="az-content-title">Add Resources</h2>
+              <h2 class="az-content-title"><c:if test="${flag eq 'edit'}">Update</c:if><c:if test="${flag ne 'edit'}">Add</c:if> Resources</h2>
             </div>
           </div>
 
           <hr class="mg-y-10" />
-
+          <form  <c:if test="${flag eq 'edit'}">action="/resource/update" method="POST" modelAttribute="updateResourceForm"</c:if>
+            <c:if test="${flag ne 'edit'}">action="/resource/save" method="POST" modelAttribute="addResourceForm"</c:if>  >
+          <input type="hidden" id="id" name="id" value="${updateResource.id}" />
           <h4>Meta Tags</h4>
           <div class="row row-sm">
             <div class="col-lg-6">
               <div class="az-content-label mg-t-20">Page Title</div>
-              <input class="form-control" placeholder="Commercial Analytics" type="text" />
+              <input class="form-control" name="metatitle" value="${updateResource.metatitle}" placeholder="Commercial Analytics" type="text" />
             </div>
-            <!-- col -->
+          
           </div>
           <div class="row row-sm">
             <div class="col-lg-6">
@@ -139,9 +82,9 @@
               <textarea
                 rows="3"
                 class="form-control"
-                placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."></textarea>
-            </div>
-            <!-- col -->
+                name="metadescription"
+                placeholder="Description">${updateResource.metadescription}</textarea>
+            </div>           
           </div>
 
           <hr class="h10" />
@@ -150,17 +93,17 @@
             <div class="col-lg-3">
               <div class="az-content-label mg-b-5">Select Banner</div>
 
-              <select class="form-control select2-no-search">
+              <select class="form-control select2-no-search" name="bannerid" Required>
                 <option label="Choose one">Select Banner</option>
-                <option value="Firefox">Firefox</option>
-                <option value="Chrome">Chrome</option>
-                <option value="Safari">Safari</option>
-                <option value="Opera">Opera</option>
-                <option value="Internet Explorer">Internet Explorer</option>
+                <option value="1"  ${updateResource.bannerid == '1' ? 'selected' : ''}>Firefox</option>
+                <option value="2"  ${updateResource.bannerid == '2' ? 'selected' : ''}>Chrome</option>
+                <option value="3"  ${updateResource.bannerid == '3' ? 'selected' : ''}>Safari</option>
+                <option value="4"  ${updateResource.bannerid == '4' ? 'selected' : ''}>Opera</option>
+                <option value="5"  ${updateResource.bannerid == '5' ? 'selected' : ''}>Internet Explorer</option>
               </select>
               <span class="spanrequired">Required *</span>
             </div>
-            <!-- col-4 -->
+        
           </div>
 
           <hr class="h10" />
@@ -169,56 +112,54 @@
           <div class="row row-sm mg-b-20">
             <div class="col-lg-3">
               <div class="az-content-label mg-b-5">Category</div>
-              <select class="form-control select2">
+              <select class="form-control select2" name="categoryId" Required>
                 <option label="Choose one"></option>
-                <option value="ebooks">ebooks</option>
-                <option value="Videos">Videos</option>
-                <option value="Article">Article</option>
-                <option value="Newsletter">Newsletter</option>
-                <option value="Presentations">Presentations</option>
+                <option value="1" ${updateResource.categoryId == '1' ? 'selected' : ''}>ebooks</option>
+                <option value="2" ${updateResource.categoryId == '2' ? 'selected' : ''}>Videos</option>
+                <option value="3" ${updateResource.categoryId == '3' ? 'selected' : ''}>Article</option>
+                <option value="4" ${updateResource.categoryId == '4' ? 'selected' : ''}>Newsletter</option>
+                <option value="5" ${updateResource.categoryId == '5' ? 'selected' : ''}>Presentations</option>
               </select>
               <span class="spanrequired">Required *</span>
             </div>
-            <!-- col-4 -->
+          
             <div class="col-lg-3 mg-t-20 mg-lg-t-0">
               <div class="az-content-label mg-b-5">Author</div>
-              <select class="form-control select2-no-search">
+              <select class="form-control select2-no-search" name="author" Required>
                 <option label="Choose one"></option>
-                <option value="Asif">Asif</option>
-                <option value="Saqib">Saqib</option>
-                <option value="Ahmed">Ahmed</option>
+                <option value="Asif" ${updateResource.author == 'Asif' ? 'selected' : ''}>Asif</option>
+                <option value="Saqib" ${updateResource.author == 'Saqib' ? 'selected' : ''}>Saqib</option>
+                <option value="Ahmed" ${updateResource.author == 'Ahmed' ? 'selected' : ''}>Ahmed</option>
               </select>
               <span class="spanrequired">Required *</span>
             </div>
-            <!-- col-4 -->
+           
             <div class="col-lg-3 mg-t-20 mg-lg-t-0">
               <div class="az-content-label mg-b-5">News Date</div>
-
+              <fmt:formatDate var="newsdate" value="${updateResource.newsDate}" pattern="MM/dd/yyyy" />
               <div class="input-group">
                 <div class="input-group-prepend">
                   <div class="input-group-text">
                     <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
                   </div>
                 </div>
-                <input type="text" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" />
+                <input type="text" name="newsDate" value="${newsdate}" class="form-control fc-datepicker" placeholder="MM/DD/YYYY" Required/>
               </div>
               <span class="spanrequired">Required *</span>
             </div>
-            <!-- col-4 -->
 
             <div class="col-lg-3 mg-t-20 mg-lg-t-0">
               <div class="az-content-label mg-b-5">Tag</div>
 
-              <select class="form-control select2" multiple="multiple">
-                <option value="Commercial Analytics" selected>Commercial Analytics</option>
-                <option value="Technology Integration">Technology Integration</option>
-                <option value="Venture Management">Venture Management</option>
+              <select class="form-control select2" multiple="multiple" name="tagId" Required>
+                <option value="Commercial Analytics" ${updateResource.tagId == 'Commercial Analytics' ? 'selected' : ''}>Commercial Analytics</option>
+                <option value="Technology Integration" ${updateResource.tagId == 'Technology Integration' ? 'selected' : ''}>Technology Integration</option>
+                <option value="Venture Management"  ${updateResource.tagId == 'Venture Management' ? 'selected' : ''}>Venture Management</option>
               </select>
               <span class="spanrequired">Required *</span>
             </div>
-            <!-- col-4 -->
-          </div>
-          <!-- row -->
+          
+          </div>      
 
           <hr class="h10" />
           <h4 class="mg-b-20">Resources Content</h4>
@@ -226,86 +167,86 @@
             <div class="col-lg-3">
               <div class="az-content-label mg-b-5">Thumbnail</div>
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile" />
+                <input type="file" class="custom-file-input" id="customFile" name="resourceThumbnail" Required/>
                 <label class="custom-file-label" for="customFile">Choose file</label>
               </div>
               <span class="spanrequired">Required * 796px x 455px</span>
             </div>
-            <!-- col-4 -->
+          
 
             <div class="col-lg-3">
               <div class="az-content-label mg-b-5">Attachement</div>
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile" />
+                <input type="file" class="custom-file-input" id="customFile" name="resourceAttachement"/>
                 <label class="custom-file-label" for="customFile">Choose file</label>
               </div>
               <span class="spaninfo">Optional PDF, MP4 for Video, ebooks and Presentation</span>
-            </div>
-            <!-- col-4 -->
+            </div>          
 
             <div class="col-lg-3">
               <div class="az-content-label mg-b-5">External Attachement</div>
               <div class="custom-file">
-                <input class="form-control" placeholder="PDF or YouTube URL" type="text" />
+                <input class="form-control" placeholder="PDF or YouTube URL" type="text" name="resourceExternalAttachement"/>
               </div>
               <span class="spaninfo">Optional PDF, MP4 for Video, ebooks and Presentation</span>
             </div>
-            <!-- col-4 -->
+         
           </div>
 
           <div class="az-content-label mg-t-20">Title</div>
           <div class="row row-sm">
             <div class="col-lg">
-              <input class="form-control" placeholder="" type="text" />
+              <input class="form-control" placeholder="Title" value="${updateResource.resourceTitle}" type="text" name="resourceTitle" />
             </div>
-            <!-- col -->
+           
           </div>
           <div class="row row-sm">
             <div class="col-lg">
               <div class="az-content-label mg-t-20">Short Description</div>
               <div class="row row-sm">
                 <div class="col-lg">
-                  <textarea rows="3" class="form-control" placeholder=""></textarea>
+                  <textarea rows="3" class="form-control" placeholder="Short Description" name="resourceShortDescription">${updateResource.resourceShortDescription}</textarea>
                 </div>
-                <!-- col -->
+              
               </div>
             </div>
-            <!-- col -->
+           
           </div>
 
           <div class="az-content-label mg-t-20">Content</div>
           <div class="row row-sm mg-b-20">
             <div class="col-lg">
-              <textarea name="editor1"></textarea>
+              <textarea name="editor1" name="resouceContent">${updateResource.resouceContent}</textarea>
             </div>
-            <!-- col -->
+         
           </div>
 
           <hr />
 
           <div class="row row-xs wd-xl-80p">
             <div class="col-lg-3">
-              <label class="ckbox"> <input type="checkbox" /><span>Enabled</span> </label>
+              <label class="ckbox"> <input type="checkbox" name="status" /><span>Enabled</span> </label>
             </div>
           </div>
           <hr />
           <div class="row row-xs wd-xl-80p">
             <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
-              <button class="btn btn-success btn-block">Update</button>
-            </div>
-            <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
-              <button class="btn btn-danger btn-block">Cancel</button>
-            </div>
+              <c:if test="${flag=='edit'}">
+                    <button class="btn btn-success btn-block" type="submit" >Update</button>
+               </c:if>
+                <c:if test="${flag!='edit'}">
+                    <button class="btn btn-success btn-block" type="submit" >Save</button>
+             </c:if>
+              </div>
+              <div class="col-sm-6 col-md-2 mg-t-10 mg-md-t-0">
+                <a class="btn btn-danger btn-block" href="/resource">Cancel</a>
+              </div>
           </div>
-
-          <hr />
-        </div>
-        <!-- az-content-body -->
-      </div>
-      <!-- container -->
-    </div>
-    <!-- az-content -->
-
+        </form>
+        <hr />
+        </div>    
+      </div>    
+    </div>   
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -329,7 +270,7 @@
       CKEDITOR.replace("editor1");
       CKEDITOR.replace("editor2");
     </script>
-    <script>
+ <script>
       // Additional code for adding placeholder in search box of select2
       (function ($) {
         var Defaults = $.fn.select2.amd.require("select2/defaults");

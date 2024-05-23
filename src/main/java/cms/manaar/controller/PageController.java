@@ -8,9 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,17 +18,20 @@ public class PageController {
 
     @GetMapping({"/page","/page/"})
     public String pages(Model model) {
+        model.addAttribute("adminmenu","page");
         model.addAttribute("pages",pageService.getAllPage());
         return "pages";
     }
 
     @RequestMapping({"/page/addPage", "/page/addPage/"})
     public String addPage(Model model) {
+         model.addAttribute("adminmenu","page");
         return "add-pages";
     }
 
     @RequestMapping({"/page/pageSignin", "/page/pageSignin/"})
-    public String pageSignin() {
+    public String pageSignin(Model model) {
+        model.addAttribute("adminmenu","page");
         return "page-signin";
     }
 
@@ -56,6 +56,7 @@ public class PageController {
 //    }
 @GetMapping("/page/edit/{id}")
 public String updatePage(Model model,@PathVariable Integer id) {
+     model.addAttribute("adminmenu","page");
     Optional<Page> optionalPage = pageService.getById(id);
     if (optionalPage.isPresent()) {
         Page page = optionalPage.get();

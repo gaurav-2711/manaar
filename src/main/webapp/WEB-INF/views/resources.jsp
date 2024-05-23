@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib
+uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,7 +11,7 @@
     <meta name="description" content="Manaar" />
     <meta name="author" content="Manaar" />
 
-    <title>Manaar | Admin</title>
+    <title>Manaar | Resource</title>
 
     <!-- vendor css -->
     <link href="../../lib/fontawesome-free/css/all.min.css" rel="stylesheet" />
@@ -93,22 +93,7 @@
 
     <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
       <div class="container">
-        <div class="az-content-left az-content-left-components">
-          <div class="component-item">
-            <h3 class="mg-b-20">Content</h3>
-
-            <nav class="nav flex-column">
-              <a href="/page" class="nav-link">Pages</a>
-              <a href="/resource" class="nav-link active">Resources</a>
-              <a href="/banner" class="nav-link">Banners</a>
-              <a href="/faqs" class="nav-link">FAQS</a>
-              <a href="/category" class="nav-link">Category</a>
-              <a href="/tags" class="nav-link">Tags</a>
-              <a href="/widgets" class="nav-link">Widgets</a>
-            </nav>
-          </div>
-          <!-- component-item -->
-        </div>
+        <jsp:include page="adminmenu.jsp" />
         <!-- az-content-left -->
         <div class="az-content-body pd-lg-l-40 d-flex flex-column">
           <div class="az-content-breadcrumb">
@@ -122,9 +107,7 @@
             </div>
             <div class="col-md-3 float-md-right">
               <form action="resource/addResource">
-                <button class="btn btn-success btn-with-icon btn-block">
-                  <i class="typcn typcn-edit"></i> Add Resources
-                </button>
+                <button class="btn btn-success btn-with-icon btn-block"><i class="typcn typcn-edit"></i> Add Resources</button>
               </form>
             </div>
           </div>
@@ -144,83 +127,27 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>The Weekly: Gone 100 Days of Donald Trump</td>
-                  <td>ebooks</td>
-                  <td>Commercial Analytics</td>
-                  <td>October 12 2020</td>
-                  <td>Asif Ameer</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>The Weekly: Gone 100 Days of Donald Trump</td>
-                  <td>Videos</td>
-                  <td>Technology Integration</td>
-                  <td>October 12 2020</td>
-                  <td>Asif Ameer</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>The Weekly: Gone 100 Days of Donald Trump</td>
-                  <td>Article</td>
-                  <td>Technology Integration</td>
-                  <td>October 12 2020</td>
-                  <td>Saqib Bilal</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>3</td>
-                  <td>The Weekly: Gone 100 Days of Donald Trump</td>
-                  <td>Newsletter</td>
-                  <td>Technology Integration</td>
-                  <td>October 12 2020</td>
-                  <td>Ahmed Emam</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>3</td>
-                  <td>The Weekly: Gone 100 Days of Donald Trump</td>
-                  <td>Presentations</td>
-                  <td>Technology Integration</td>
-                  <td>October 12 2020</td>
-                  <td>Ahmed Emam</td>
-                  <td><i class="far fa-check-circle"></i></td>
-                  <td>
-                    <div class="btn-icon-list">
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-edit"></i></a>
-                      <a class="btn btn-primary btn-icon"><i class="typcn typcn-delete-outline"></i></a>
-                    </div>
-                  </td>
-                </tr>
+                <c:forEach var="resource" items="${resources}">
+                  <tr>
+                    <td>${resource.id}</td>
+                    <td>${resource.resourceTitle}</td>
+                    <td>${resource.categoryId}</td>
+                    <td>${resource.tagId}</td>
+                    <td>${resource.newsDate}</td>
+                    <td>${resource.author}</td>
+                    <td><i class="far fa-check-circle"></i></td>
+                    <td>
+                      <div class="btn-icon-list">
+                        <a href="/resource/edit/${resource.id}" class="btn btn-primary btn-icon"
+                          ><i class="typcn typcn-edit"></i
+                        ></a>
+                        <a onclick="confirmDelete(${resource.id})" class="btn btn-primary btn-icon"
+                          ><i class="typcn typcn-delete-outline"></i
+                        ></a>
+                      </div>
+                    </td>
+                  </tr>
+                </c:forEach>
               </tbody>
             </table>
           </div>
@@ -247,7 +174,8 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous"
-      referrerpolicy="no-referrer"></script>
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="../../lib/jquery-ui/ui/widgets/datepicker.js"></script>
     <script src="../../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../../lib/ionicons/ionicons.js"></script>
@@ -265,6 +193,25 @@
     <script>
       CKEDITOR.replace("editor1");
       CKEDITOR.replace("editor2");
+
+      function confirmDelete(id) {
+        var result = confirm("Are you sure you want to delete this resources?");
+        if (result) {
+          $.ajax({
+            type: "DELETE",
+            url: "/resource/deleteResource/" + id,
+            success: function (response) {
+              location.reload();
+            },
+            error: function (xhr, status, error) {
+              alert("Error deleting resource: " + error);
+            },
+          });
+        } else {
+          // If user cancels, do nothing
+          return false;
+        }
+      }
     </script>
     <script>
       // Additional code for adding placeholder in search box of select2

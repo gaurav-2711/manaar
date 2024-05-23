@@ -22,7 +22,7 @@ public class Resource {
     private String metatitle;
     private String metadescription;
     private Integer bannerid;
-    private String categoryId;
+    private Integer categoryId;
     private String author;
     private Date newsDate;
     private String tagId;
@@ -66,11 +66,11 @@ public class Resource {
         this.bannerid = bannerid;
     }
 
-    public String getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 

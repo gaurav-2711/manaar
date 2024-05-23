@@ -94,22 +94,7 @@
 
     <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
       <div class="container">
-        <div class="az-content-left az-content-left-components">
-          <div class="component-item">
-            <h3 class="mg-b-20">Content</h3>
-
-            <nav class="nav flex-column">
-              <a href="/page" class="nav-link active">Pages</a>
-              <a href="/resource" class="nav-link">Resources</a>
-              <a href="/banner" class="nav-link">Banners</a>
-              <a href="/faqs" class="nav-link">FAQS</a>
-              <a href="/category" class="nav-link">Category</a>
-              <a href="/tags" class="nav-link">Tags</a>
-              <a href="/widgets" class="nav-link">Widgets</a>
-            </nav>
-          </div>
-          <!-- component-item -->
-        </div>
+        <jsp:include page="adminmenu.jsp" />
         <!-- az-content-left -->
         <div class="az-content-body pd-lg-l-40 d-flex flex-column">
           <div class="az-content-breadcrumb">
@@ -145,7 +130,7 @@
                   class="form-control"
                   name="metadescription"
                   Required
-                  placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
+                  placeholder="Description"
                 >${updatePage.metadescription}</textarea>
                 <span class="spanrequired">Required *</span>
               </div>
@@ -209,7 +194,7 @@
                       class="form-control"
                       name="shortdescription"
                       required
-                      placeholder="Our world has more data and better technology than ever before, but investment decisions are becoming more complex than ever before. This growing complexity increased the need of our clients for more powerful data capabilities and led us to invest heavily to develop unique analytics products and services."
+                      placeholder="Short Description"
                     > ${updatePage.shortdescription}</textarea>
                     <span class="spanrequired">Required *</span>
                   </div>

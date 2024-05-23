@@ -39,8 +39,9 @@ public class SecurityConfig implements WebMvcConfigurer {
         httpSecurity.cors((cors) -> cors.disable())
                 .csrf((csrf) -> csrf.disable())
                         .authorizeHttpRequests((req) -> req
+//                                .requestMatchers("/admin","/admin/**").permitAll()
                                 .requestMatchers("/register","/authlogin").permitAll()
-                                .requestMatchers( "/resources/**","/static/**", "/lib/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/docs/**","/WEB-INF/views/**").permitAll()
+                                .requestMatchers( "/static/**", "/lib/**", "/js/**", "/css/**", "/scss/**", "/img/**", "/docs/**","/WEB-INF/views/**").permitAll()
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                                 .anyRequest().authenticated()
                         )
@@ -77,7 +78,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
         registry.addResourceHandler("/static/**").addResourceLocations("/static/","classpath:/static/");
         registry.addResourceHandler("/lib/**").addResourceLocations("classpath:/static/lib/");
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");

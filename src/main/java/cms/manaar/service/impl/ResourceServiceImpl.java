@@ -1,6 +1,5 @@
 package cms.manaar.service.impl;
 
-import cms.manaar.models.Page;
 import cms.manaar.models.Resource;
 import cms.manaar.repository.ResourceRepository;
 import cms.manaar.service.ResourceService;
@@ -14,6 +13,7 @@ import java.util.Optional;
 public class ResourceServiceImpl implements ResourceService {
     @Autowired
     private ResourceRepository resourceRepository;
+
     @Override
     public Optional<Resource> getById(Integer id) {
         return resourceRepository.findById(id);
@@ -47,11 +47,16 @@ public class ResourceServiceImpl implements ResourceService {
             existingResource.setResourceThumbnail(resource.getResourceThumbnail());
             existingResource.setResourceExternalAttachement(resource.getResourceExternalAttachement());
             existingResource.setResourceTitle(resource.getResourceTitle());
-
+            existingResource.setNewsDate(resource.getNewsDate());
+            existingResource.setResouceContent(resource.getResouceContent());
+            existingResource.setTagId(resource.getTagId());
+            existingResource.setBannerid(resource.getBannerid());
+            existingResource.setCategoryId(resource.getCategoryId());
 
             return resourceRepository.save(existingResource);
         } else {
             // Handle the case where the page with the specified id is not found
             throw new IllegalArgumentException("Page not found with id: " + id);
-        }    }
+        }
+    }
 }
